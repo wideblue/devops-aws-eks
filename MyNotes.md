@@ -3,6 +3,8 @@
 ### Useful links
 [AWS EKS: Managed setup with CloudFormation](https://medium.com/@dhammond0083/aws-eks-managed-setup-with-cloudformation-97461300e952)
 
+[AWS EKS workshop (use of spot instances)](https://eksworkshop.com/spot/introduction/)
+
 [quickstart-amazon-eks](https://github.com/aws-quickstart/quickstart-amazon-eks)
 
 [Amazon EKS with AWS Cloudformation and AWS CDK](https://github.com/aws-samples/amazon-eks-refarch-cloudformation)
