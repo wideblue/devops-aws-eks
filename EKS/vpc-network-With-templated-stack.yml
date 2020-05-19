@@ -1,0 +1,74 @@
+Description: >
+# NOT WORKING LOOK at comment at resources
+  Damjan Dvoršek / VPC with 2 availability  zones and private and public subnets 
+  using existant tempalte
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+    - Label:
+        default: Network
+      Parameters:
+        - EnvironmentName
+        - VpcCidr
+        - PublicSubnet0Cidr
+        - PublicSubnet1Cidr
+        - WebSubnet0Cidr
+        - WebSubnet1Cidr
+
+Parameters:
+  EnvironmentName:
+    Description: An Environment name that will be prefixed to resources
+    Type: String  
+  VpcCidr:
+    AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Description: The IP range in CIDR notation for VPC
+    Type: String
+    Default: 10.0.0.0/16
+  PublicSubnet0Cidr:
+    AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Default: 10.0.200.0/24
+    Description: CIDR block for Public subnet 0 located in Availability Zone 0
+    Type: String
+  PublicSubnet1Cidr:
+    AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Default: 10.0.201.0/24
+    Description: CIDR block for Public subnet 1 located in Availability Zone 1
+    Type: String  
+  WebSubnet0Cidr:
+    AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Default: 10.0.0.0/22
+    Description: CIDR block for Web subnet 0 located in Availability Zone 0
+    Type: String
+  WebSubnet1Cidr:
+    AllowedPattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/(1[6-9]|2[0-8]))$"
+    ConstraintDescription: CIDR block parameter must be in the form x.x.x.x/16-28
+    Default: 10.0.4.0/22
+    Description: CIDR block for Web subnet 1 located in Availability Zone 1
+    Type: String
+
+
+Resources:
+
+  VpcNetwork:
+    Type: AWS::CloudFormation::Stack
+    # this is not working because the template needs be served from S3          
+    TemplateURL: https://raw.githubusercontent.com/wideblue/udacity-devops-project/master/network.yml
+    Properties:
+      Parameters:
+        EnvironmentName:
+          !Ref EnvironmentName
+        VpcCidr:
+          !Ref VpcCidr
+        PublicSubnet0Cidr:
+          !Ref PublicSubnet0Cidr
+        PublicSubnet1Cidr:
+          !Ref PublicSubnet1Cidr
+        WebSubnet0Cidr:
+          !Ref WebSubnet0Cidr
+        WebSubnet1Cidr:
+          !Ref WebSubnet1Cidr  

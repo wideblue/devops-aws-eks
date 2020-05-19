@@ -19,5 +19,7 @@
 
 [How to Set Up Jenkins on Kubernetes](https://appfleet.com/blog/how-to-set-up-jenkins-on-kubernetes/)
 
+[Zero-downtime Deployment in Kubernetes with Jenkins](https://kubernetes.io/blog/2018/04/30/zero-downtime-deployment-kubernetes-jenkins/)
+
 
 [Multi-tenant Rancher Kubernetes cluster](https://itnext.io/multi-tenant-rancher-kubernetes-cluster-dbac3d739b1c)
