@@ -238,6 +238,14 @@ Outputs:
     Value: !Join [ ',', [ !Ref PublicSubnet0, !Ref PublicSubnet1 ] ]  
     Export:
       Name: !Sub ${EnvironmentName}-PUB-NETS
+  WebSubnet0:
+    Value: !Ref WebSubnet0
+    Export:
+      Name: !Sub ${EnvironmentName}-WebSubnet0
+  WebSubnet1:
+    Value: !Ref WebSubnet1
+    Export:
+      Name: !Sub ${EnvironmentName}-WebSubnet1    
   WebSubnet:
     Description: A list of the privat subnets
     Value: !Join [ ',', [ !Ref WebSubnet0, !Ref WebSubnet1 ] ]

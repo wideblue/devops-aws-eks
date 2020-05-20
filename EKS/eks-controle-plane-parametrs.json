@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey": "EnvironmentName",
+        "ParameterValue": "EKS-cluster"
+    },
+    {
+        "ParameterKey": "EKSClusterName",
+        "ParameterValue": "Udacity-Capstone-EKS"
+    },
+    {
+        "ParameterKey": "EKSClusterRoleName",
+        "ParameterValue": "EKS-cluster-role"
+    }
+]
