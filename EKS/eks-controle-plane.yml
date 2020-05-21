@@ -26,12 +26,12 @@ Resources:
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
-          - Effect: Allow
+        - Effect: Allow
           Principal:
             Service:
-              - eks.amazonaws.com
+            - eks.amazonaws.com
           Action:
-            - 'sts:AssumeRole'
+          - 'sts:AssumeRole'
       RoleName: !Ref EKSClusterRoleName
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
@@ -50,15 +50,29 @@ Resources:
     Properties:
       Name: !Ref EKSClusterName
       RoleArn: !GetAtt EKSClusterRole.Arn
-        ResourcesVpcConfig:
-          SecurityGroupIds:
+      ResourcesVpcConfig:
+        SecurityGroupIds:
           - !Ref ControlPlaneSecurityGroup
-          SubnetIds:
-          - Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet0
-          - Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet1
+        SubnetIds:
           - Fn::ImportValue: !Sub ${EnvironmentName}-WebSubnet0
           - Fn::ImportValue: !Sub ${EnvironmentName}-WebSubnet1
+          - Fn::ImportValue: !Sub ${EnvironmentName}-WebSubnet2
+          - Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet0
+          - Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet1
+          - Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet2
 
+          # - !Join 
+          #     - ","
+          #     - -  Fn::ImportValue: !Sub ${EnvironmentName}-WebSubnet0
+          #       -  Fn::ImportValue: !Sub ${EnvironmentName}-WebSubnet1 
+          #       -  Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet0
+          #       -  Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet1
+          # - !Join 
+          #     - ","
+          #     - -  Fn::ImportValue: !Sub ${EnvironmentName}-WebSubnet0
+          #       -  Fn::ImportValue: !Sub ${EnvironmentName}-PublicSubnet0
+
+          
 
 Outputs:
   ControlPlaneSecurityGroup:
