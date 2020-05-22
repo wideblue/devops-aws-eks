@@ -8,6 +8,9 @@
 [quickstart-amazon-eks](https://github.com/aws-quickstart/quickstart-amazon-eks)
 
 [Amazon EKS with AWS Cloudformation and AWS CDK](https://github.com/aws-samples/amazon-eks-refarch-cloudformation)
+[Guide to Designing EKS Clusters for Better Security](https://www.stackrox.com/post/2020/03/guide-to-eks-cluster-design-for-better-security/)
+
+[7 Awesome CloudFormation Hacks](https://garbe.io/blog/2017/07/17/cloudformation-hacks/)
 
 [Ansible for Kubernetes Examples](https://github.com/geerlingguy/ansible-for-kubernetes)
 
@@ -15,7 +18,7 @@
 
 [Flexible CI/CD with Kubernetes, Helm, Traefik and Jenkins](https://hands-on-tech.github.io/2020/03/15/k8s-jenkins-example.html)
 
-[Installing Jenkins On your Kubernets Cluster By Using Helm Charts](https://www.devtech101.com/2019/06/18/installing-jenkins-on-your-kubernets-cluster-by-using-helm-charts/)
+[Utilize Jenkins in an Auto-Scaling Kubernetes Deployment on Amazon EKS with Spot instances](https://itnext.io/utilize-jenkins-in-an-auto-scaling-kubernetes-deployment-on-amazon-eks-with-spot-instances-f9159df00aee)
 
 [How to Set Up Jenkins on Kubernetes](https://appfleet.com/blog/how-to-set-up-jenkins-on-kubernetes/)
 
