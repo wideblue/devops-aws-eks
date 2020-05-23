@@ -1,0 +1,34 @@
+- hosts: localhost
+  gather_facts: false
+  vars_files:
+    - group_vars/main.yaml
+
+  tasks:
+    - name: Ensure VPC exists via CloudFormation.
+      cloudformation:
+        stack_name: eks-simple-vpc
+        state: present
+        region: "{{ aws_region }}"
+        profile: "{{ aws_profile }}"
+        disable_rollback: true
+        template: VPC/templates/aws-simple-vpc.yaml
+        tags:
+          stack: eks-simple-vpc
+          application: eks-simple
+      register: vpc_info
+    
+    - name: Add to stack_outputs.
+      set_fact:
+        stack_outputs: "{{ stack_outputs | combine(vpc_info['stack_outputs']) }}"    
+
+    - debug:
+        msg: "{{ stack_outputs }}"
+
+    - name: "Running eksctl cluster create with name {{ eks_cluster_name }}"
+      command: "eksctl create cluster --vpc-public-subnets={{ stack_outputs.SubnetIds }} -n {{ eks_cluster_name }} -t {{ eks_nodegroup_instance_type }} -M {{ eks_nodegroup_cluster_size }} -r {{ aws_region }}"
+
+  # roles:
+  #   - role: VPC
+  #     tags: infra
+    # - role: eksctl
+    #   tags: eks
