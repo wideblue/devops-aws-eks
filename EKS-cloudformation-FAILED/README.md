@@ -1,0 +1,1 @@
+My failed attempt to create fully automated creation of EKS cluster with cloudformation. I think that the fail was in that I did not find "not to complicated way" to join nodegroupe nodes to the EKS cluster.

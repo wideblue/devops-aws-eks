@@ -8,8 +8,12 @@
         "ParameterValue": "Udacity-Capstone-EKS"
     },
     {
-        "ParameterKey": "KeyName",
+        "ParameterKey": "EKSClusterRoleName",
         "ParameterValue": "EKS-cluster-role"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "udacity-devops-us-west"
     },
     {
         "ParameterKey": "NodeGroupName",

@@ -1,0 +1,18 @@
+[
+    {
+        "ParameterKey": "EnvironmentName",
+        "ParameterValue": "eks-cluster"
+    },
+    {
+        "ParameterKey": "EKSClusterName",
+        "ParameterValue": "Udacity-devops-EKS"
+    },
+    {
+        "ParameterKey": "KeyName",
+        "ParameterValue": "udacity-devops-us-west"
+    },
+    {
+        "ParameterKey": "NodeGroupName",
+        "ParameterValue": "EKS-worker-nodes"
+    }
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "ParameterKey": "EnvironmentName",
+        "ParameterValue": "eks-cluster"
+    },
+    {
+        "ParameterKey": "EKSClusterName",
+        "ParameterValue": "Udacity-devops-EKS"
+    },
+    {
+        "ParameterKey": "VpcCidr",
+        "ParameterValue": "192.168.0.0/16"
+    },
+    {
+        "ParameterKey": "PublicSubnet0Cidr",
+        "ParameterValue": "192.168.0.0/19"
+    },
+    {
+        "ParameterKey": "PublicSubnet1Cidr",
+        "ParameterValue": "192.168.32.0/19"
+    },
+    {
+        "ParameterKey": "PublicSubnet2Cidr",
+        "ParameterValue": "192.168.64.0/19"
+    },
+    {
+        "ParameterKey": "PrivateSubnet0Cidr",
+        "ParameterValue": "192.168.96.0/19"
+    },
+    {
+        "ParameterKey": "PrivateSubnet1Cidr",
+        "ParameterValue": "192.168.128.0/19"
+    },
+    {
+        "ParameterKey": "PrivateSubnet2Cidr",
+        "ParameterValue": "192.168.160.0/19"
+    }
+]

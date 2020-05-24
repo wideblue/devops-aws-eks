@@ -1,0 +1,467 @@
+Description: Damjan Dvoršek / Amazon EKS Node Group
+Parameters:
+  EnvironmentName:
+    Description: An Environment name that will be prefixed to resources
+    Type: String
+
+  BootstrapArguments:
+    Type: String
+    Default: "--kubelet-extra-args --node-labels=nodetype=worker"
+    Description: "Arguments to pass to the bootstrap script. See files/bootstrap.sh in https://github.com/awslabs/amazon-eks-ami"
+
+#  ClusterControlPlaneSecurityGroup:
+#    Type: "AWS::EC2::SecurityGroup::Id"
+#    Description: The security group of the cluster control plane.
+
+  EKSClusterName:
+    Type: String
+    Description: The cluster name provided when the cluster was created. If it is incorrect, nodes will not be able to join the cluster.
+
+  KeyName:
+    Type: "AWS::EC2::KeyPair::KeyName"
+    Description: The EC2 Key Pair to allow SSH access to the instances
+
+  NodeAutoScalingGroupDesiredCapacity:
+    Type: Number
+    Default: 1
+    Description: Desired capacity of Node Group ASG.
+
+  NodeAutoScalingGroupMaxSize:
+    Type: Number
+    Default: 4
+    Description: Maximum size of Node Group ASG. Set to at least 1 greater than NodeAutoScalingGroupDesiredCapacity.
+
+  NodeAutoScalingGroupMinSize:
+    Type: Number
+    Default: 1
+    Description: Minimum size of Node Group ASG.
+
+  NodeGroupName:
+    Type: String
+    Description: Unique identifier for the Node Group.
+
+  NodeImageId:
+    Type: String
+    Default: ""
+    Description: (Optional) Specify your own custom image ID. This value overrides any AWS Systems Manager Parameter Store value specified above.
+
+  NodeImageIdSSMParam:
+    Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>"
+    Default: /aws/service/eks/optimized-ami/1.14/amazon-linux-2/recommended/image_id
+    Description: AWS Systems Manager Parameter Store parameter of the AMI ID for the worker node instances.
+
+  NodeInstanceType:
+    Type: String
+    Default: t3.medium
+    AllowedValues:
+      - a1.medium
+      - a1.large
+      - a1.xlarge
+      - a1.2xlarge
+      - a1.4xlarge
+      - c1.medium
+      - c1.xlarge
+      - c3.large
+      - c3.xlarge
+      - c3.2xlarge
+      - c3.4xlarge
+      - c3.8xlarge
+      - c4.large
+      - c4.xlarge
+      - c4.2xlarge
+      - c4.4xlarge
+      - c4.8xlarge
+      - c5.large
+      - c5.xlarge
+      - c5.2xlarge
+      - c5.4xlarge
+      - c5.9xlarge
+      - c5.12xlarge
+      - c5.18xlarge
+      - c5.24xlarge
+      - c5.metal
+      - c5d.large
+      - c5d.xlarge
+      - c5d.2xlarge
+      - c5d.4xlarge
+      - c5d.9xlarge
+      - c5d.18xlarge
+      - c5n.large
+      - c5n.xlarge
+      - c5n.2xlarge
+      - c5n.4xlarge
+      - c5n.9xlarge
+      - c5n.18xlarge
+      - cc2.8xlarge
+      - cr1.8xlarge
+      - d2.xlarge
+      - d2.2xlarge
+      - d2.4xlarge
+      - d2.8xlarge
+      - f1.2xlarge
+      - f1.4xlarge
+      - f1.16xlarge
+      - g2.2xlarge
+      - g2.8xlarge
+      - g3s.xlarge
+      - g3.4xlarge
+      - g3.8xlarge
+      - g3.16xlarge
+      - h1.2xlarge
+      - h1.4xlarge
+      - h1.8xlarge
+      - h1.16xlarge
+      - hs1.8xlarge
+      - i2.xlarge
+      - i2.2xlarge
+      - i2.4xlarge
+      - i2.8xlarge
+      - i3.large
+      - i3.xlarge
+      - i3.2xlarge
+      - i3.4xlarge
+      - i3.8xlarge
+      - i3.16xlarge
+      - i3.metal
+      - i3en.large
+      - i3en.xlarge
+      - i3en.2xlarge
+      - i3en.3xlarge
+      - i3en.6xlarge
+      - i3en.12xlarge
+      - i3en.24xlarge
+      - m1.small
+      - m1.medium
+      - m1.large
+      - m1.xlarge
+      - m2.xlarge
+      - m2.2xlarge
+      - m2.4xlarge
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - m4.16xlarge
+      - m5.large
+      - m5.xlarge
+      - m5.2xlarge
+      - m5.4xlarge
+      - m5.8xlarge
+      - m5.12xlarge
+      - m5.16xlarge
+      - m5.24xlarge
+      - m5.metal
+      - m5a.large
+      - m5a.xlarge
+      - m5a.2xlarge
+      - m5a.4xlarge
+      - m5a.8xlarge
+      - m5a.12xlarge
+      - m5a.16xlarge
+      - m5a.24xlarge
+      - m5ad.large
+      - m5ad.xlarge
+      - m5ad.2xlarge
+      - m5ad.4xlarge
+      - m5ad.12xlarge
+      - m5ad.24xlarge
+      - m5d.large
+      - m5d.xlarge
+      - m5d.2xlarge
+      - m5d.4xlarge
+      - m5d.8xlarge
+      - m5d.12xlarge
+      - m5d.16xlarge
+      - m5d.24xlarge
+      - m5d.metal
+      - p2.xlarge
+      - p2.8xlarge
+      - p2.16xlarge
+      - p3.2xlarge
+      - p3.8xlarge
+      - p3.16xlarge
+      - p3dn.24xlarge
+      - g4dn.xlarge
+      - g4dn.2xlarge
+      - g4dn.4xlarge
+      - g4dn.8xlarge
+      - g4dn.12xlarge
+      - g4dn.16xlarge
+      - g4dn.metal
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - r4.large
+      - r4.xlarge
+      - r4.2xlarge
+      - r4.4xlarge
+      - r4.8xlarge
+      - r4.16xlarge
+      - r5.large
+      - r5.xlarge
+      - r5.2xlarge
+      - r5.4xlarge
+      - r5.8xlarge
+      - r5.12xlarge
+      - r5.16xlarge
+      - r5.24xlarge
+      - r5.metal
+      - r5a.large
+      - r5a.xlarge
+      - r5a.2xlarge
+      - r5a.4xlarge
+      - r5a.8xlarge
+      - r5a.12xlarge
+      - r5a.16xlarge
+      - r5a.24xlarge
+      - r5ad.large
+      - r5ad.xlarge
+      - r5ad.2xlarge
+      - r5ad.4xlarge
+      - r5ad.12xlarge
+      - r5ad.24xlarge
+      - r5d.large
+      - r5d.xlarge
+      - r5d.2xlarge
+      - r5d.4xlarge
+      - r5d.8xlarge
+      - r5d.12xlarge
+      - r5d.16xlarge
+      - r5d.24xlarge
+      - r5d.metal
+      - t1.micro
+      - t2.nano
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+      - t2.xlarge
+      - t2.2xlarge
+      - t3.nano
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - t3.large
+      - t3.xlarge
+      - t3.2xlarge
+      - t3a.nano
+      - t3a.micro
+      - t3a.small
+      - t3a.medium
+      - t3a.large
+      - t3a.xlarge
+      - t3a.2xlarge
+      - u-6tb1.metal
+      - u-9tb1.metal
+      - u-12tb1.metal
+      - x1.16xlarge
+      - x1.32xlarge
+      - x1e.xlarge
+      - x1e.2xlarge
+      - x1e.4xlarge
+      - x1e.8xlarge
+      - x1e.16xlarge
+      - x1e.32xlarge
+      - z1d.large
+      - z1d.xlarge
+      - z1d.2xlarge
+      - z1d.3xlarge
+      - z1d.6xlarge
+      - z1d.12xlarge
+      - z1d.metal
+    ConstraintDescription: Must be a valid EC2 instance type
+    Description: EC2 instance type for the node instances
+
+  NodeVolumeSize:
+    Type: Number
+    Default: 20
+    Description: Node volume size
+
+#  Subnets:
+#    Type: "List<AWS::EC2::Subnet::Id>"
+#    Description: The subnets where workers can be created.
+
+# VpcId:
+#    Type: "AWS::EC2::VPC::Id"
+#   Description: The VPC of the worker instances
+
+Conditions:
+  HasNodeImageId: !Not
+    - "Fn::Equals":
+        - Ref: NodeImageId
+        - ""
+
+Mappings:
+  ServicePrincipalPartitionMap:
+    aws:
+      EC2: ec2.amazonaws.com
+      EKS: eks.amazonaws.com
+    aws-cn:
+      EC2: ec2.amazonaws.com.cn
+      EKS: eks.amazonaws.com
+      
+Resources:
+  EgressInterCluster:
+    Type: 'AWS::EC2::SecurityGroupEgress'
+    Properties:
+      Description: >-
+        Allow control plane to communicate with worker nodes in group
+        ng-b1cf9a68 (kubelet and workload TCP ports)
+      DestinationSecurityGroupId: !Ref SG
+      FromPort: 1025
+      GroupId:  
+        Fn::ImportValue: !Sub ${EnvironmentName}-SecurityGroup'
+      IpProtocol: tcp
+      ToPort: 65535
+  EgressInterClusterAPI:
+    Type: 'AWS::EC2::SecurityGroupEgress'
+    Properties:
+      Description: >-
+        Allow control plane to communicate with worker nodes in group
+        ng-b1cf9a68 (workloads using HTTPS port, commonly used with extension
+        API servers)
+      DestinationSecurityGroupId: !Ref SG
+      FromPort: 443
+      GroupId:  
+        Fn::ImportValue: !Sub ${EnvironmentName}-SecurityGroup'
+      IpProtocol: tcp
+      ToPort: 443
+  IngressInterCluster:
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      Description: >-
+        Allow worker nodes in group ng-b1cf9a68 to communicate with control
+        plane (kubelet and workload TCP ports)
+      FromPort: 1025
+      GroupId: !Ref SG
+      IpProtocol: tcp
+      SourceSecurityGroupId:  
+        Fn::ImportValue: !Sub ${EnvironmentName}-SecurityGroup'
+      ToPort: 65535
+  IngressInterClusterAPI:
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      Description: >-
+        Allow worker nodes in group ng-b1cf9a68 to communicate with control
+        plane (workloads using HTTPS port, commonly used with extension API
+        servers)
+      FromPort: 443
+      GroupId: !Ref SG
+      IpProtocol: tcp
+      SourceSecurityGroupId:  
+        Fn::ImportValue: !Sub ${EnvironmentName}-SecurityGroup'
+      ToPort: 443
+  IngressInterClusterCP:
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      Description: >-
+        Allow control plane to receive API requests from worker nodes in group
+        ng-b1cf9a68
+      FromPort: 443
+      GroupId:  
+        Fn::ImportValue: !Sub ${EnvironmentName}-SecurityGroup'
+      IpProtocol: tcp
+      SourceSecurityGroupId: !Ref SG
+      ToPort: 443
+  NodeGroup:
+    Type: 'AWS::AutoScaling::AutoScalingGroup'
+    Properties:
+      LaunchTemplate:
+        LaunchTemplateName: !Sub '${AWS::StackName}'
+        Version: !GetAtt NodeGroupLaunchTemplate.LatestVersionNumber
+      MaxSize: '2'
+      MinSize: '2'
+      Tags:
+        - Key: Name
+          PropagateAtLaunch: 'true'
+          Value: extravagant-mushroom-1590068224-ng-b1cf9a68-Node
+        - Key: kubernetes.io/cluster/extravagant-mushroom-1590068224
+          PropagateAtLaunch: 'true'
+          Value: owned
+      VPCZoneIdentifier: !Split 
+        - ','
+        - Fn::ImportValue: !Sub ${EnvironmentName}-SubnetsPublic'
+    UpdatePolicy:
+      AutoScalingRollingUpdate:
+        MaxBatchSize: '1'
+        MinInstancesInService: '0'
+  NodeGroupLaunchTemplate:
+    Type: 'AWS::EC2::LaunchTemplate'
+    Properties:
+      LaunchTemplateData:
+        IamInstanceProfile:
+          Arn: !GetAtt NodeInstanceProfile.Arn
+        ImageId: ami-065418523a44331e5
+        InstanceType: m5.large
+        NetworkInterfaces:
+          - DeviceIndex: 0
+            Groups:
+              - !ImportValue >-
+                eksctl-extravagant-mushroom-1590068224-cluster::SharedNodeSecurityGroup
+              - !Ref SG
+        UserData: >-
+          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
+      LaunchTemplateName: !Sub '${AWS::StackName}'
+  NodeInstanceProfile:
+    Type: 'AWS::IAM::InstanceProfile'
+    Properties:
+      Path: /
+      Roles:
+        - !Ref NodeInstanceRole
+  NodeInstanceRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - 'sts:AssumeRole'
+            Effect: Allow
+            Principal:
+              Service:
+                - !FindInMap 
+                  - ServicePrincipalPartitionMap
+                  - !Ref 'AWS::Partition'
+                  - EC2
+        Version: 2012-10-17
+      ManagedPolicyArns:
+        - !Sub >-
+          arn:${AWS::Partition}:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonEKSWorkerNodePolicy'
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/AmazonEKS_CNI_Policy'
+      Path: /
+  SG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: >-
+        Communication between the control plane and worker nodes in group
+        ng-b1cf9a68
+      Tags:
+        - Key: kubernetes.io/cluster/extravagant-mushroom-1590068224
+          Value: owned
+        - Key: Name
+          Value: !Sub '${AWS::StackName}/SG'
+      VpcId:  
+        Fn::ImportValue: !Sub ${EnvironmentName}-VPC'
+
+Outputs:
+  FeatureLocalSecurityGroup:
+    Value: true
+  FeaturePrivateNetworking:
+    Value: false
+  FeatureSharedSecurityGroup:
+    Value: true
+  InstanceProfileARN:
+    Export:
+      Name: !Sub '${AWS::StackName}::InstanceProfileARN'
+    Value: !GetAtt NodeInstanceProfile.Arn
+  InstanceRoleARN:
+    Export:
+      Name: !Sub '${AWS::StackName}::InstanceRoleARN'
+    Value: !GetAtt NodeInstanceRole.Arn
