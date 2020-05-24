@@ -27,7 +27,7 @@ pipeline {
         stage('Docker Publish') {
             steps {
                 container('docker') {
-                    withDockerRegistry([credentialsId: "${REGISTRY_CREDENTIAL}", url: ""]) {
+                    withDockerRegistry([credentialsId: "${REGISTRY_CREDENTIAL}", url: "https://registry.hub.docker.com"]) {
                         sh "docker push ${REGISTRY}:$GIT_COMMIT"
                     }
                 }
