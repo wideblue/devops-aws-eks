@@ -4,7 +4,7 @@
     - group_vars/main.yaml
 
   tasks:
-    - name: Ensure VPC exists via CloudFormation.
+    - name: CloudFormation create VPC.
       cloudformation:
         stack_name: eks-simple-vpc
         state: present
@@ -24,11 +24,15 @@
     - debug:
         msg: "{{ stack_outputs }}"
 
-    - name: "Running eksctl cluster create with name {{ eks_cluster_name }}"
+    - name: "Running eksctl cluster create with name {{ eks_cluster_name }}."
       command: "eksctl create cluster --vpc-public-subnets={{ stack_outputs.SubnetIds }} -n {{ eks_cluster_name }} -t {{ eks_nodegroup_instance_type }} -M {{ eks_nodegroup_cluster_size }} -r {{ aws_region }}"
+      register: eksctl
+    - debug: msg={{ eksctl }}
 
-  # roles:
-  #   - role: VPC
-  #     tags: infra
-    # - role: eksctl
-    #   tags: eks
+    - name: "Create jenkins namespace"
+      command: "kubectl apply -f Jenkins/manifests/jenkins-namespace.yaml "
+ 
+    - name: Install Jenkins to cluster with helm chart.
+      command: "helm install jenkins stable/jenkins --values Jenkins/jenkins-values.yaml -n jenkins"
+      register: helm_jenkins
+    - debug: msg={{ helm_jenkins }}

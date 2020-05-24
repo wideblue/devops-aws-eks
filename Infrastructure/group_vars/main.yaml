@@ -14,7 +14,7 @@
     
     # Nodegroup settings.
     eks_nodegroup_name: eks-simple-nodegroup
-    eks_nodegroup_instance_type: t3.micro
+    eks_nodegroup_instance_type: t3.small
     eks_nodegroup_cluster_size: 3
     
     # WordPress settings.
