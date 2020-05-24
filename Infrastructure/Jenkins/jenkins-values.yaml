@@ -4,14 +4,14 @@ master:
     adminPassword: Damjan55**
     numExecutors: 1
     installPlugins:
-      - kubernetes:1.21.1
-      - workflow-job:2.36
+      - kubernetes:1.25.7
+      - workflow-job:2.39
       - workflow-aggregator:2.6
       - credentials-binding:1.20
       - git:3.12.1
       - command-launcher:1.4
-      - github-branch-source:2.5.8
-      - docker-workflow:1.22
+      - github-branch-source:2.7.1
+      - docker-workflow:1.23
       - pipeline-utility-steps:2.3.1
       - blueocean:1.23.2
     overwritePlugins: true
