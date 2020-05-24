@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Lint') {
       steps {
-        container(name: 'Linter') {
+        container(name: 'linter') {
           sh 'cd sample-microservice && make lint'
         }
 
