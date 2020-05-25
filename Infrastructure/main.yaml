@@ -30,9 +30,12 @@
     - debug: msg={{ eksctl }}
 
     - name: "Create jenkins namespace"
-      command: "kubectl apply -f Jenkins/manifests/jenkins-namespace.yaml "
+      command: "kubectl apply -f Jenkins/manifests/jenkins-namespace.yaml"
  
     - name: Install Jenkins to cluster with helm chart.
       command: "helm install jenkins stable/jenkins --values Jenkins/jenkins-values.yaml -n jenkins"
       register: helm_jenkins
     - debug: msg={{ helm_jenkins }}
+
+    - name: "Create jenkins clusterrolebinding"
+      command: "kubectl apply -f Jenkins/manifests/jenkins-default-clusterrolebinding.yaml"
