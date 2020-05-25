@@ -36,7 +36,8 @@ pipeline {
 
       }
     }
-
+    // NOTE: this did not work, maybe I did not use right url, 
+    // also tried with url:"" , but jenkis compained if url was not set
     // stage('Docker Publish') {
     //   steps {
     //     container(name: 'docker') {
