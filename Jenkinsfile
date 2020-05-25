@@ -10,7 +10,7 @@ pipeline {
     stage('Lint') {
       steps {
         container(name: 'linter') {
-          sh 'cd sample-microservice && make lint'
+          sh 'apt-get update && apt-get install -y tidy && cd sample-app && tidy -q -e *.html'
         }
 
       }
@@ -19,17 +19,17 @@ pipeline {
     stage('Docker Build') {
       steps {
         container(name: 'docker') {
-          sh "cd sample-microservice && docker build -t ${REGISTRY}:$GIT_COMMIT ."
+          sh "cd sample-app && docker build -t ${REGISTRY}:$GIT_COMMIT ."
         }
 
       }
     }
 
-    stage('Docker Publish') {
+    stage('Docker push') {
       steps {
         container(name: 'docker') {
-          withDockerRegistry(credentialsId: "${REGISTRY_CREDENTIAL}", url: 'https://registry.hub.docker.com') {
-            sh "docker push ${REGISTRY}:$GIT_COMMIT"
+          withCredentials([usernamePassword(credentialsId: "${REGISTRY_CREDENTIAL}", usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+           sh "docker login -u $USERNAME -p $PASSWORD && docker push ${REGISTRY}:$GIT_COMMIT"
           }
 
         }
@@ -37,10 +37,22 @@ pipeline {
       }
     }
 
+    // stage('Docker Publish') {
+    //   steps {
+    //     container(name: 'docker') {
+    //       withDockerRegistry(credentialsId: "${REGISTRY_CREDENTIAL}", url: 'https://registry-1.docker.io/v2/') {
+    //         sh "docker push ${REGISTRY}:$GIT_COMMIT"
+    //       }
+
+    //     }
+
+    //   }
+    // }
+
     stage('Kubernetes Deploy') {
       steps {
         container(name: 'kubectl') {
-          sh "kubectl run  udacity-app --image=${REGISTRY}:$GIT_COMMIT --port 80 --restart Never"
+          sh "sed -e s|${REGISTRY}|${REGISTRY}:$GIT_COMMIT|g sample-app/deploy-manifest.yaml | kubectl apply -f -"
         }
 
       }

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacity-capstone
+  labels:
+    app: udacity-microservice
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: udacity-microservice
+  template:
+    metadata:
+      labels:
+        app: udacity-microservice
+    spec:
+      containers:
+      - name: nginx
+        image: wideblue/udacity-microservice
+        ports:
+        - containerPort: 80
+---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: udacity-capestone-svc
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: udacity-microservice
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
