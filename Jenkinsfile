@@ -52,7 +52,7 @@ pipeline {
     stage('Kubernetes Deploy') {
       steps {
         container(name: 'kubectl') {
-          sh "sed -e s|${REGISTRY}|${REGISTRY}:$GIT_COMMIT|g sample-app/deploy-manifest.yaml | kubectl apply -f -"
+          sh "sed -e 's|${REGISTRY}|${REGISTRY}:$GIT_COMMIT|g' sample-app/deploy-manifest.yaml | kubectl apply -f -"
         }
 
       }

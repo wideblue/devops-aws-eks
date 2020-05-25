@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: default
   name: udacity-capstone
   labels:
     app: udacity-microservice
@@ -24,6 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: default
   creationTimestamp: null
   name: udacity-capestone-svc
 spec:
