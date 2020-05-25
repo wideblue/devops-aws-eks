@@ -1,7 +1,7 @@
 master:
     useSecurity: true
-    adminUser: damjan
-    adminPassword: Damjan55**
+    adminUser: adminUser
+    adminPassword: adminPassword
     numExecutors: 1
     installPlugins:
       - kubernetes:1.25.7

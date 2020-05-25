@@ -37,6 +37,7 @@ The whole Jenkins CI/CD pipeline is run inside kubernetes (EKS). Stages are:
 - Kubernetes Deploy: deploying the microservice as a `Deployment` kubernetes object and exposing it as a service type LoadBalancer as defined in [sample-app/deploy-manifest.yaml](./sample-app/deploy-manifest.yaml) manifest.
 
 The microservice rolling update gets executed when new microservice image gets build with a new tag (,set as git commit SHA) and manifest `deploy-manifest.yaml` with updated image tag is `apply`-ed to kubernetes cluster.   
+ 
 
 ### TODO:
 - [x] Infra cloudformation code (EKS Kubernetes)
