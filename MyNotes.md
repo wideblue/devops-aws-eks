@@ -8,6 +8,8 @@
 
 [quickstart-amazon-eks](https://github.com/aws-quickstart/quickstart-amazon-eks)
 
+[AWS EKS overview and manual EKS cluster set up](https://rtfm.co.ua/en/kubernetes-part-3-aws-eks-overview-and-manual-eks-cluster-set-up/#Create_Worker_Nodes)
+
 [Provision a Kubernetes Cluster in Amazon EKS with Weaveworks eksctl and AWS CDK](https://blog.reactioncommerce.com/deploying-kubernetes-clusters-in-aws-eks-with-the-aws-cloud-development-kit/)
 [Amazon EKS with AWS Cloudformation and AWS CDK](https://github.com/aws-samples/amazon-eks-refarch-cloudformation)
 [Guide to Designing EKS Clusters for Better Security](https://www.stackrox.com/post/2020/03/guide-to-eks-cluster-design-for-better-security/)
